@@ -3,11 +3,15 @@ import './App.css'
 import Form from './components/Form'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // добавляем новые часы в состояние.
+  const [watchList, watchListAdd] = useState([]);
+
+
   return (
     <React.Fragment>
-      <div>components here.</div>
+      <div>
       <Form />
+      </div>
     </React.Fragment>
   )
 }
