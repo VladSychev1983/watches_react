@@ -13,6 +13,7 @@ function App() {
   // добавляем новые часы в состояние.
   const [watchList, watchListAdd] = useState<StateType[]>([]);
   
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleWatchAdd = (data: any) => {
     console.log(`App`,data);
@@ -21,11 +22,20 @@ function App() {
         watchListAdd([...watchList, data]);
       }
   }
+
+    //функция удаления состояния.
+  const handleDelete = (_event: React.FormEvent, idxToRemove: number) => {
+    const newWatchesList: StateType[] = watchList
+      .filter((_data, idx) => idx !== idxToRemove)
+      .map(({city, offset}) => ( {city: city, offset: offset} ));
+    watchListAdd([...newWatchesList]);
+  }
+
   return (
     <React.Fragment>
       <div>
-      <Form onSubmit={(_event, data) => handleWatchAdd(data)}/>
-        <WatchList watchList={watchList}/>
+      <Form onSubmit={(_event, data) => handleWatchAdd(data)} />
+        <WatchList watchList={watchList} handleDelete={handleDelete} />
       </div>
     </React.Fragment>
   )
