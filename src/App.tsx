@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './App.css'
 import Form from './components/Form'
+import WatchList from './components/WatchList'
 
 type StateType = {
   find?(arg0: (item: never) => boolean): unknown
@@ -23,6 +24,7 @@ function App() {
     <React.Fragment>
       <div>
       <Form onSubmit={(_event, data) => handleWatchAdd(data)}/>
+        <WatchList data={watchList}/>
       </div>
     </React.Fragment>
   )
