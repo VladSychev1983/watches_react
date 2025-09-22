@@ -6,11 +6,9 @@ interface MyState {
     }
 
 type FormProps = {
-    onSubmit?: ()  => void;
+    onSubmit: (event:React.FormEvent, data: object)  => void;
 }
-
 type State = Readonly<MyState>;
-
 
 class Form extends React.Component<FormProps,State> {
     constructor(props: FormProps) {
@@ -23,15 +21,21 @@ class Form extends React.Component<FormProps,State> {
     }
     handleSubmit (event: React.FormEvent) {
         //вызвать функцию добавления часов
+        event.preventDefault();
+        this.props.onSubmit(event, this.state);
     }
-    handleChange(event: { target: { name: string; value: number | string; }; }) {
+    handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         //отслеживаем изменения формы.
         const {name, value} = event.target;
         console.log(name, value);
-        if(name && value) {
+        if(name === 'offset') {
             this.setState({
-                city: name,
                 offset: value,
+            })  
+        }
+        else if (name === 'city') {
+            this.setState({
+                city: value,
             })
         }
     }
@@ -42,7 +46,7 @@ class Form extends React.Component<FormProps,State> {
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="city">Название</label>
                         <input type="text" name="city" placeholder="Например Москва" 
-                        onChange={this.handleChange} required />
+                        onChange={this.handleChange}  value={this.state.city} required />
                         <label htmlFor="offset">Временная зона</label>
                         <input type="text" name="offset" placeholder="Например 1" 
                         onChange={this.handleChange} 
